@@ -9,18 +9,7 @@ const app = express(); // サーバー起動
 
 const port = 5000;
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // '*' を特定のオリジンに変更可能
-  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  // プリフライトリクエストに対応
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
+app.use(cors()); //CORSを許可するための記述
 
 app.use(express.json()); //json形式で受け取るための記述
 
