@@ -9,13 +9,7 @@ require("dotenv").config(); //環境変数を使うためのライブラリ
 
 const port = 5000;
 
-app.use(
-  cors({
-    origin: "https://steper.vercel.app", // 本番環境ではフロントエンドのドメインに置き換えてください
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.use(cors());
 
 app.use(express.json()); //json形式で受け取るための記述
 

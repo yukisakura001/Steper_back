@@ -3,7 +3,6 @@
 const router = require("express").Router(); //ルーター分けるための記述
 const { PrismaClient } = require("@prisma/client");
 const isAuthenticated = require("../middlewares/isAuthenticated"); //認証用のミドルウェア
-const { cp } = require("fs");
 
 const prisma = new PrismaClient(); //PrismaClientのインスタンスを作成
 
