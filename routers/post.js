@@ -90,6 +90,7 @@ router.delete("/goal_delete/:goalId", isAuthenticated, async (req, res) => {
     });
     res.status(200).json(delData);
   } catch (e) {
+    console.log(e);
     res.status(500).json({ error: "サーバーエラー" });
   }
 });
