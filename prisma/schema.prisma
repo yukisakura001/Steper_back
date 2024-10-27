@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement()) //デフォルトで連番が振られるようになる
+  username String
+  email    String  @unique //重複だめ
+  password String
+  Goal     Goal[]
+  Steps    Steps[]
+}
+
+model Goal {
+  id       Int      @id @default(autoincrement())
+  content  String
+  deadLine DateTime
+  future   String
+  authorId Int
+  author   User     @relation(fields: [authorId], references: [id]) //一対多の関係を示す
+  Steps    Steps[]
+}
+
+model Steps {
+  id        Int      @id @default(autoincrement())
+  content   String
+  deadLine  DateTime
+  clearTime DateTime
+  goalId    Int
+  goal      Goal     @relation(fields: [goalId], references: [id]) //一対多の関係を示す
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id]) //一対多の関係を示す
+  reward    String
+}
