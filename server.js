@@ -3,9 +3,9 @@ const cors = require("cors"); //CORSを許可するためのライブラリ
 const authRoute = require("./routers/auth"); //ルーターを読み込む
 const usersRoute = require("./routers/users"); //ルーターを読み込む
 const postRoute = require("./routers/post"); //ルーターを読み込む
+require("dotenv").config(); //環境変数を使うためのライブラリ
 
 const app = express(); // サーバー起動
-require("dotenv").config(); //環境変数を使うためのライブラリ
 
 const port = 5000;
 
