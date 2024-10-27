@@ -19,7 +19,7 @@ router.get("/goals_get", isAuthenticated, async (req, res) => {
     });
     res.status(200).json(goals);
   } catch (e) {
-    res.status(500).json({ message: "サーバーエラー" });
+    res.status(501).json({ message: "サーバーエラー" });
   }
 });
 
