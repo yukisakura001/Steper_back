@@ -170,4 +170,22 @@ router.delete("/step_delete/:stepId", isAuthenticated, async (req, res) => {
   }
 });
 
+router.get("/steps_list", isAuthenticated, async (req, res) => {
+  try {
+    const steps = await prisma.steps.findMany({
+      where: {
+        authorId: req.userId,
+      },
+      orderBy: {
+        deadLine: "asc",
+      },
+      take: 3,
+    });
+    console.log(steps);
+    res.status(200).json(steps);
+  } catch (e) {
+    res.status(500).json({ message: "サーバーエラー" });
+  }
+});
+
 module.exports = router; //routerをエクスポート
