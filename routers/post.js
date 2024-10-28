@@ -90,7 +90,6 @@ router.delete("/goal_delete/:goalId", isAuthenticated, async (req, res) => {
     });
     res.status(200).json(delData);
   } catch (e) {
-    console.log(e);
     res.status(500).json({ error: "サーバーエラー" });
   }
 });
@@ -175,6 +174,7 @@ router.get("/steps_list", isAuthenticated, async (req, res) => {
     const steps = await prisma.steps.findMany({
       where: {
         authorId: req.userId,
+        clearTime: new Date("1970-01-01T00:00:00.000Z"),
       },
       orderBy: {
         deadLine: "asc",
