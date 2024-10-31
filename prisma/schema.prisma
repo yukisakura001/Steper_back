@@ -39,8 +39,8 @@ model Steps {
   deadLine  DateTime
   clearTime DateTime
   goalId    Int
-  goal      Goal     @relation(fields: [goalId], references: [id]) //一対多の関係を示す
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
   authorId  Int
-  author    User     @relation(fields: [authorId], references: [id]) //一対多の関係を示す
+  author    User     @relation(fields: [authorId], references: [id])
   reward    String
 }
