@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json()); //json形式で受け取るための記述
+app.use(cors()); //CORSを許可するための記述
 
 app.use("/api/auth", authRoute); //ルーターを読み込む（auth）
 app.use("/api/users", usersRoute); //ルーターを読み込む（users）
