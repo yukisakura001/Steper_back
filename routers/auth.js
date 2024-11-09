@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
       res.status(400).json({ error: "既に登録されているメールアドレスです" });
     }
   } catch (error) {
-    res.status(500).json({ error: "エラー" });
+    res.status(500).json({ error: error.message });
   }
 
   const hashedPassword = await bcrypt.hashSync(password, 10);
