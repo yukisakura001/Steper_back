@@ -16,18 +16,11 @@ datasource db {
 
 model User {
   id       Int     @id @default(autoincrement()) //デフォルトで連番が振られるようになる
+  username String
   email    String  @unique //重複だめ
   password String
   Goal     Goal[]
   Steps    Steps[]
-}
-
-model TempUser {
-  id                Int      @id @default(autoincrement())
-  email             String   @unique
-  password          String
-  expiresAt         DateTime
-  verificationToken String   @unique
 }
 
 model Goal {
