@@ -12,14 +12,21 @@ const crypto = require("crypto");
 router.post("/register", async (req, res) => {
   const { email, password } = req.body;
 
+  //期限切れのユーザーを削除
+  const now = new Date();
+  await prisma.tempUser.deleteMany({
+    where: {
+      expiresAt: {
+        lte: now,
+      },
+    },
+  });
+
   const hashedPassword = await bcrypt.hashSync(password, 10);
   //認証コード作成
   const authCode = crypto.randomUUID();
   //認証URL作成
   const authUrl = `${process.env.VERIFICATION_BASE_URL}${authCode}`;
-
-  //期限切れ設定
-  const now = new Date();
 
   // 24時間後のミリ秒を計算
   const twentyFourHoursLaterMillis = now.getTime() + 24 * 60 * 60 * 1000;
@@ -78,6 +85,13 @@ router.post("/check", async (req, res) => {
   });
   if (!user) {
     return res.status(401).json({ error: "認証失敗" });
+  }
+  const now = new Date();
+  if (now > user.expiresAt) {
+    await prisma.tempUser.delete({
+      where: { email: user.email },
+    });
+    return res.status(401).json({ error: "認証期限切れ" });
   }
   await prisma.user.upsert({
     where: { email: user.email },
