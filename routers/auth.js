@@ -8,37 +8,9 @@ const nodemailer = require("nodemailer");
 const prisma = new PrismaClient(); //PrismaClientのインスタンスを作成
 const crypto = require("crypto");
 
-//新規ユーザー登録API
-//router.post("/register", async (req, res) => {
-//  const { username, email, password } = req.body; //json形式で受け取る
-//
-//  const hashedPassword = await bcrypt.hashSync(password, 10); //10はハッシュ化の強度
-//
-//  const user = await prisma.user.create({
-//    //レスポンスまで待つためにawaitをつける
-//    //userはテーブル名
-//    data: {
-//      email,
-//      password: hashedPassword,
-//    },
-//  });
-//  return res.json({ user }); //json形式で返す
-//});
 //仮ユーザー登録API
 router.post("/register", async (req, res) => {
   const { email, password } = req.body;
-
-  try {
-    const existingUser = await prisma.user.findUnique({
-      where: { email: email },
-    });
-
-    if (!existingUser) {
-      res.status(400).json({ error: "既に登録されているメールアドレスです" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
 
   const hashedPassword = await bcrypt.hashSync(password, 10);
   //認証コード作成
