@@ -25,14 +25,12 @@ router.get("/goals_get", isAuthenticated, async (req, res) => {
 router.post("/goals_post", isAuthenticated, async (req, res) => {
   const { content, deadLine, future } = req.body;
 
-  deadLine1 = new Date(deadLine);
+  const deadLine1 = new Date(deadLine);
 
   const goal = await prisma.goal.create({
     data: {
       content,
-      deadLine: new Date(
-        deadLine1.getTime() - deadLine1.getTimezoneOffset() * 60000
-      ),
+      deadLine: new Date(deadLine1.getTime()),
       authorId: req.userId,
       future: future,
     },
@@ -63,7 +61,7 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
   const { goalId } = req.params;
   const { content, deadLine, future } = req.body;
 
-  deadLine1 = new Date(deadLine);
+  const deadLine1 = new Date(deadLine);
 
   try {
     const goal = await prisma.goal.update({
@@ -72,9 +70,7 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
       },
       data: {
         content,
-        deadLine: new Date(
-          deadLine1.getTime() - deadLine1.getTimezoneOffset() * 60000
-        ),
+        deadLine: new Date(deadLine1.getTime()),
         future,
       },
     });
@@ -102,14 +98,12 @@ router.post("/step_post/:goalId", isAuthenticated, async (req, res) => {
   const { goalId } = req.params;
   const { content, deadLine, reward } = req.body;
 
-  deadLine1 = new Date(deadLine);
+  const deadLine1 = new Date(deadLine);
 
   const step = await prisma.steps.create({
     data: {
       content,
-      deadLine: new Date(
-        deadLine1.getTime() - deadLine1.getTimezoneOffset() * 60000
-      ),
+      deadLine: new Date(deadLine1.getTime()),
       clearTime: new Date(null),
       authorId: req.userId,
       reward: reward,
@@ -143,7 +137,7 @@ router.put("/step_update/:stepId", isAuthenticated, async (req, res) => {
   const { stepId } = req.params;
   const { clearTime } = req.body;
 
-  clearTime1 = new Date(clearTime);
+  const clearTime1 = new Date(clearTime);
 
   try {
     const step = await prisma.steps.update({
