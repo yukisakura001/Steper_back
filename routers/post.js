@@ -30,7 +30,9 @@ router.post("/goals_post", isAuthenticated, async (req, res) => {
   const goal = await prisma.goal.create({
     data: {
       content,
-      deadLine: deadLine1,
+      deadLine: new Date(
+        deadLine1.getTime() - deadLine1.getTimezoneOffset() * 60000
+      ),
       authorId: req.userId,
       future: future,
     },
@@ -70,7 +72,9 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
       },
       data: {
         content,
-        deadLine: deadLine1,
+        deadLine: new Date(
+          deadLine1.getTime() - deadLine1.getTimezoneOffset() * 60000
+        ),
         future,
       },
     });
@@ -103,7 +107,9 @@ router.post("/step_post/:goalId", isAuthenticated, async (req, res) => {
   const step = await prisma.steps.create({
     data: {
       content,
-      deadLine: deadLine1,
+      deadLine: new Date(
+        deadLine1.getTime() - deadLine1.getTimezoneOffset() * 60000
+      ),
       clearTime: new Date(null),
       authorId: req.userId,
       reward: reward,
