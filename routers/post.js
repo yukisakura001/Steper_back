@@ -25,6 +25,14 @@ router.get("/goals_get", isAuthenticated, async (req, res) => {
 router.post("/goals_post", isAuthenticated, async (req, res) => {
   const { content, deadLine, future } = req.body;
 
+  //文字数を制限
+  if (content.length > 50) {
+    return res.status(400).json({ message: "50文字以内で入力してください" });
+  }
+  if (future.length > 300) {
+    return res.status(400).json({ message: "300文字以内で入力してください" });
+  }
+
   const deadLine1 = new Date(deadLine);
 
   const goal = await prisma.goal.create({
@@ -64,6 +72,13 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
   const deadLine1 = new Date(deadLine);
 
   try {
+    //文字数を制限
+    if (content.length > 50) {
+      return res.status(400).json({ message: "50文字以内で入力してください" });
+    }
+    if (future.length > 300) {
+      return res.status(400).json({ message: "300文字以内で入力してください" });
+    }
     const goal = await prisma.goal.update({
       where: {
         id: parseInt(goalId),
@@ -99,6 +114,13 @@ router.post("/step_post/:goalId", isAuthenticated, async (req, res) => {
   const { content, deadLine, reward } = req.body;
 
   const deadLine1 = new Date(deadLine);
+  //文字数を制限
+  if (content.length > 50) {
+    return res.status(400).json({ message: "50文字以内で入力してください" });
+  }
+  if (reward.length > 300) {
+    return res.status(400).json({ message: "300文字以内で入力してください" });
+  }
 
   const step = await prisma.steps.create({
     data: {
@@ -181,7 +203,6 @@ router.get("/steps_list", isAuthenticated, async (req, res) => {
       },
       take: 3,
     });
-    console.log(steps);
     res.status(200).json(steps);
   } catch (e) {
     res.status(500).json({ message: "サーバーエラー" });
