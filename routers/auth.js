@@ -46,7 +46,7 @@ router.post("/register", async (req, res) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: "認証コード",
+    subject: "Steper認証コード送信",
     text: `Steper：\n${authUrl}\nにアクセスして認証してください。`,
   };
   transporter.sendMail(mailOptions, (error, info) => {
