@@ -35,6 +35,9 @@ router.post("/goals_post", isAuthenticated, async (req, res) => {
   }
 
   console.log(deadLine);
+  console.log(req.userId);
+  console.log(content);
+  console.log(future);
 
   const goal = await prisma.goal.create({
     data: {
