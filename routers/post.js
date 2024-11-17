@@ -18,6 +18,7 @@ router.get("/goals_get", isAuthenticated, async (req, res) => {
     });
     res.status(200).json(goals);
   } catch (e) {
+    console.log(e);
     res.status(501).json({ message: "サーバーエラー" });
   }
 });
