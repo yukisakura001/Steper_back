@@ -27,7 +27,7 @@ const port = 5000;
 //  next();
 //});
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://www.steper.jp");
+  res.setHeader("Access-Control-Allow-Origin", "https://www.steper.jp/");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
