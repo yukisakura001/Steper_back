@@ -191,6 +191,7 @@ router.get("/steps_list", isAuthenticated, async (req, res) => {
     const steps = await prisma.steps.findMany({
       where: {
         authorId: req.userId,
+        //clearTime: "1970-01-01T00:00:00.000Z",
       },
       orderBy: {
         deadLine: "asc",
