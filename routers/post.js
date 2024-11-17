@@ -34,7 +34,7 @@ router.post("/goals_post", isAuthenticated, async (req, res) => {
     return res.status(400).json({ message: "300文字以内で入力してください" });
   }
 
-  console.log(typeof deadLine);
+  console.log(deadLine);
 
   const goal = await prisma.goal.create({
     data: {
