@@ -36,7 +36,7 @@ const corsOptions = {
 };
 
 app.use(express.json()); //json形式で受け取るための記述
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/api/auth", authRoute); //ルーターを読み込む（auth）
 app.use("/api/users", usersRoute); //ルーターを読み込む（users）
