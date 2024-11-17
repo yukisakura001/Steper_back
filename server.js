@@ -9,26 +9,31 @@ const app = express(); // サーバー起動
 
 const port = 5000;
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://www.steper.jp");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Private-Network", true);
-  //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
-  res.setHeader("Access-Control-Max-Age", 7200);
-
-  next();
-});
+//app.use((req, res, next) => {
+//  res.setHeader("Access-Control-Allow-Origin", "https://www.steper.jp");
+//  res.setHeader(
+//    "Access-Control-Allow-Methods",
+//    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
+//  );
+//  res.setHeader(
+//    "Access-Control-Allow-Headers",
+//    "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
+//  );
+//  res.setHeader("Access-Control-Allow-Credentials", true);
+//  res.setHeader("Access-Control-Allow-Private-Network", true);
+//  //  Firefox caps this at 24 hours (86400 seconds). Chromium (starting in v76) caps at 2 hours (7200 seconds). The default value is 5 seconds.
+//  res.setHeader("Access-Control-Max-Age", 7200);
+//
+//  next();
+//});
+const corsOptions = {
+  origin: "https://www.steper.jp",
+  credentials: true, // クッキーなどの認証情報を許可する場合
+  optionsSuccessStatus: 200, // 一部の古いブラウザ向け
+};
 
 app.use(express.json()); //json形式で受け取るための記述
-//app.use(cors()); //CORSを許可するための記述
+app.use(cors(corsOptions));
 
 app.use("/api/auth", authRoute); //ルーターを読み込む（auth）
 app.use("/api/users", usersRoute); //ルーターを読み込む（users）
