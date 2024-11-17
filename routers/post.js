@@ -82,6 +82,7 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
     const goal = await prisma.goal.update({
       where: {
         id: parseInt(goalId),
+        authorId: req.userId,
       },
       data: {
         content,
