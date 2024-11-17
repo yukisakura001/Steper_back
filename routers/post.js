@@ -200,6 +200,7 @@ router.get("/steps_list", isAuthenticated, async (req, res) => {
     });
     res.status(200).json(steps);
   } catch (e) {
+    console.log("User ID:", req.userId);
     console.log(e);
     res.status(500).json({ message: e });
   }
