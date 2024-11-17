@@ -31,7 +31,6 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE", // 許可するHTTPメソッド
   allowedHeaders:
     "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
-  credentials: true, // クッキーなどの認証情報を許可する場合
   optionsSuccessStatus: 200, // 一部の古いブラウザ向け
   maxAge: 7200, // プリフライトリクエストのキャッシュ期間（秒）
 };
