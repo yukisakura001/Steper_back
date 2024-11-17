@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Goal" ALTER COLUMN "deadLine" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Steps" ALTER COLUMN "deadLine" SET DATA TYPE TEXT,
+ALTER COLUMN "clearTime" SET DATA TYPE TEXT;

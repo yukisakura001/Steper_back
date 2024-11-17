@@ -33,12 +33,10 @@ router.post("/goals_post", isAuthenticated, async (req, res) => {
     return res.status(400).json({ message: "300文字以内で入力してください" });
   }
 
-  const deadLine1 = new Date(deadLine);
-
   const goal = await prisma.goal.create({
     data: {
       content,
-      deadLine: new Date(deadLine1.getTime()),
+      deadLine: deadLine,
       authorId: req.userId,
       future: future,
     },
@@ -69,8 +67,6 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
   const { goalId } = req.params;
   const { content, deadLine, future } = req.body;
 
-  const deadLine1 = new Date(deadLine);
-
   try {
     //文字数を制限
     if (content.length > 50) {
@@ -86,7 +82,7 @@ router.put("/goal_update/:goalId", isAuthenticated, async (req, res) => {
       },
       data: {
         content,
-        deadLine: new Date(deadLine1.getTime()),
+        deadLine: deadLine,
         future,
       },
     });
@@ -114,7 +110,6 @@ router.post("/step_post/:goalId", isAuthenticated, async (req, res) => {
   const { goalId } = req.params;
   const { content, deadLine, reward } = req.body;
 
-  const deadLine1 = new Date(deadLine);
   //文字数を制限
   if (content.length > 50) {
     return res.status(400).json({ message: "50文字以内で入力してください" });
@@ -126,8 +121,8 @@ router.post("/step_post/:goalId", isAuthenticated, async (req, res) => {
   const step = await prisma.steps.create({
     data: {
       content,
-      deadLine: new Date(deadLine1.getTime()),
-      clearTime: new Date(null),
+      deadLine: deadLine,
+      clearTime: "1970-01-01T00:00:00.000Z",
       authorId: req.userId,
       reward: reward,
       goalId: parseInt(goalId),
@@ -160,8 +155,6 @@ router.put("/step_update/:stepId", isAuthenticated, async (req, res) => {
   const { stepId } = req.params;
   const { clearTime } = req.body;
 
-  const clearTime1 = new Date(clearTime);
-
   try {
     const step = await prisma.steps.update({
       where: {
@@ -169,7 +162,7 @@ router.put("/step_update/:stepId", isAuthenticated, async (req, res) => {
         authorId: req.userId,
       },
       data: {
-        clearTime: clearTime1,
+        clearTime: clearTime,
       },
     });
     res.status(200).json(step);
@@ -197,7 +190,7 @@ router.get("/steps_list", isAuthenticated, async (req, res) => {
     const steps = await prisma.steps.findMany({
       where: {
         authorId: req.userId,
-        clearTime: new Date("1970-01-01T00:00:00.000Z"),
+        clearTime: "1970-01-01T00:00:00.000Z",
       },
       orderBy: {
         deadLine: "asc",
