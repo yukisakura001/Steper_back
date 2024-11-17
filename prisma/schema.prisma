@@ -41,13 +41,13 @@ model Goal {
 }
 
 model Steps {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   content   String
   deadLine  String
-  clearTime String
+  clearTime DateTime
   goalId    Int
-  goal      Goal   @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  goal      Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
   authorId  Int
-  author    User   @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
   reward    String
 }

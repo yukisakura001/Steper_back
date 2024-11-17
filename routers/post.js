@@ -123,7 +123,7 @@ router.post("/step_post/:goalId", isAuthenticated, async (req, res) => {
     data: {
       content,
       deadLine: deadLine,
-      clearTime: "1970-01-01T00:00:00.000Z",
+      clearTime: new Date("1970-01-01T00:00:00.000Z"),
       authorId: req.userId,
       reward: reward,
       goalId: parseInt(goalId),
@@ -163,7 +163,7 @@ router.put("/step_update/:stepId", isAuthenticated, async (req, res) => {
         authorId: req.userId,
       },
       data: {
-        clearTime: clearTime,
+        clearTime: new Date(clearTime),
       },
     });
     res.status(200).json(step);
@@ -191,7 +191,7 @@ router.get("/steps_list", isAuthenticated, async (req, res) => {
     const steps = await prisma.steps.findMany({
       where: {
         authorId: req.userId,
-        clearTime: "2000-01-01T00:00:00.000Z",
+        clearTime: new Date("1970-01-01T00:00:00.000Z"),
       },
       orderBy: {
         deadLine: "asc",
